@@ -1,0 +1,84 @@
+﻿* {margin:0;padding:0;line-height:0;border:none;}
+
+label, span, strong, input,p,blockquote,ul,dl {line-height:1.5;}
+
+#Body {background:#333;padding:10px;}
+
+/* forms */
+.formRow {
+    padding: 5px 0;
+    display: block;
+}
+
+
+.formLabel {
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.text {
+    height: 25px;
+    line-height: 25px;
+    vertical-align: middle;
+}
+
+.text:focus {
+    padding: 0;
+}
+
+.button {border:none;background:none;line-height:1.5;font-size:14px;font-weight:normal;display:inline-block;color:#f7f7f7;font:14px Verdana, Geneva, sans-serif;text-shadow:2px 0px 2px #000, -1px 0px 1px #020094;line-height:1.5;border-bottom:1px solid #f7f7f7;cursor:pointer;}
+
+.disabled.button {color:#777;}
+.disabled.text {background:#eee;}
+
+.LightBox {background:#fff;opacity:.6;position:absolute;top:0;left:0;width:100%;height:100%;z-index:10;}
+.Window, .Pane {border:2px solid #f7f7f7;box-shadow:inset 0 0 1px 1px #333,0 0 1px 1px #333, inset 0 0 1px 2px #0064ea;color:#f7f7f7;background:#0260ba;background: linear-gradient(to bottom, #0260ba 0%,#020094 100%);border-radius:4px;font:14px Verdana, Geneva, sans-serif;text-shadow:2px 0px 2px #000, -1px 0px 1px #020094;line-height:1.5}
+
+.PaneInner {padding:10px;}
+.Pane {background:linear-gradient(to right, #0260ba 0%,#020094 100%);}
+.Heading {position:absolute;top:0;right:0;height:25px;}
+.HeadingInner {padding:5px 10px;float:right;white-space:nowrap;}
+
+.H {color:#00fffd;}
+.EM {color:#ffff02;font-weight:bold;}
+.S {color:#f7f7f7;font-weight:normal;font-size:12px;}
+
+
+.questionPane {position:relative;}
+.question {float:left;width:60%;}
+.chatWindow {float:left;width:40%;}
+.users {position:relative;}
+
+.pointerFadeIn {animation: pointerFadeIn .5s;opacity:1;}
+.pointerFadeOut {animation: pointerFadeOut .5s;opacity:0;}
+@keyframes pointerFadeOut {
+    from {left:-10px;opacity:1;}
+    to {left:-20px;opacity:0;}
+}
+@keyframes pointerFadeIn {
+    from {left:-20px;opacity:0;}
+    to {left:-10px;opacity:1;}
+}
+
+
+.icoCorrectHide {opacity:0;}
+.icoCorrectShow {animation: icoCorrectShow 1s;opacity:1;}
+
+@keyframes icoCorrectShow {
+    from {transform:scale(4,4);opacity:0;}
+    to {transform:scale(1,1);opacity:1;}
+}
+
+
+.users {}
+.chat {}
+.chatText {width:80%;}
+.responses .icoCorrect {margin-left:10px;}
+
+.pauseBar {display:inline-block;width:10%;min-width:60px;vertical-align:middle;padding-left:10px;}
+.progressBar {border:2px solid #f7f7f7;border-left-width:3px;border-right-width:3px;box-shadow:2px 2px 2px 1px #000,0 0 1px 0px #000, inset 2px 4px 2px 0px rgba(0,0,0,.75);background:#777;height:12px;}
+.progress {height:12px;background:#eebbba;background: linear-gradient(to bottom, #fff 0%,#ec9993 100%);box-shadow:inset 2px 4px 2px 0px rgba(0,0,0,.75)}
+
+.pointer {width:30px;height:20px;position:relative;display:inline-block;vertical-align:middle;}
+.icoPointer {position:absolute;top:0;left:-10px;width:30px;height:20px;background:url(/Img/sprites.png) no-repeat 0 -20px;display:inline-block;line-height:20px;}
+.icoCorrect {display:inline-block;height:15px;line-height:15px;width:20px;background:url(/Img/sprites.png) no-repeat -20px 0;vertical-align:middle;}   

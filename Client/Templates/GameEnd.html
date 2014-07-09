@@ -1,0 +1,11 @@
+﻿<div class="PaneInner">
+    <div class="formRow"><label>Game Over!</label></div>
+
+    <div><label ng-show="Winners.length == 1" class="">Winner!</label><label ng-show="Winners.length > 1" class="">Draw!</label></div>
+    <div ng-repeat="winner in Winners">
+        <div class="formRow"><span class="H">{{winner.UserName}}</span> with <span class="EM">{{winner.Points}}</span> points!</div>
+    </div>
+    <div class="formRow">
+        <a class="button" ng-click="PlayAgain()">Play Again</a>
+    </div>
+</div>

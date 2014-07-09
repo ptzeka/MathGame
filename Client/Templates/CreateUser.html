@@ -1,0 +1,16 @@
+﻿<div class="PaneInner">
+    <form ng-controller="FormController" ng-init="Url='/ProfileService/CreateUser'" name="MyForm" ng-submit="Submit()">
+        <div class="formRow">
+            <span class="pointer"><span class="pointerFadeIn icoPointer"></span></span>
+            <label for="UserName" class="H">Create User Name</label>
+            <input class="text" type="text" ng-model="Model.UserName" name="UserName" required />
+            <br/>
+            <span class="errorLabel" ng-show="MyForm.UserName.$error.required && !MyForm.UserName.$pristine">Username required</span><br/>
+            <span class="errorLabel" ng-show="MyForm.UserName.$error.exists && !MyForm.UserName.$pristine">Username exists</span>
+            <span class="errorLabel" ng-show="MyForm.UserName.$error.failed && !MyForm.UserName.$pristine">Failed to create user</span>
+        </div>
+        <div class="formRow">
+            <input class="button" type="submit" value="Submit" />
+        </div>
+    </form>
+</div>
