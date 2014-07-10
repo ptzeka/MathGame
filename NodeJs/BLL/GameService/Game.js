@@ -6,7 +6,7 @@
     var _pauseEnd = 0;
 
     var _dificulty = 2;
-    var _maxQuestions = 1;
+    var _maxQuestions = 10;
     var _currentQuestion = 0;
     var _players = 0;
     var _question = null;
