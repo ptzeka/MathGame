@@ -21,6 +21,13 @@ module.exports = new function () {
         });
     }
 
+    this.RemoveUser = function(guid)
+    {
+        return new Promise(function (data) {
+            delete savedUsers[guid];
+        });
+    }
+
     this.SaveUser = function (guid, info) {
         return this.Exists(info.UserName).then(function (data) {
             if (!data.exists && guid) {

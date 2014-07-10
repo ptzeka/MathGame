@@ -53,7 +53,7 @@ jQuery.fn.PopUp = String.prototype.PopUp = function (n) {
         h = 15e3,
         u = null,
         o = !1,
-        c = "350px",
+        c = "",
         v = !0,
         a = !0,
         i = !1,
@@ -62,7 +62,7 @@ jQuery.fn.PopUp = String.prototype.PopUp = function (n) {
         w = "top:-15px;right:-15px",
         r = !1;
     n && (n.index && (h = n.index), n.button && (u = $(n.button)), n.width && (c = n.width + "px"), o = n.showLightBox || !1, v = n.showCloseButton == !1 ? !1 : !0, a = n.showCloseIcon == !1 ? !1 : !0, i = n.fixed ? !0 : !1, r = n.hide);
-    var t = $('<div id="popup" class="PopUp Window" style="width:' + c + ";position:" + (i ? "fixed" : "absolute") + ";top:-4000;left:-4000;z-index:" + h + (r ? ";display:none;" : "") + '"></div>'),
+    var t = $('<div id="popup" class="PopUp Window" style="width:' + c + ";position:" + (i ? "fixed" : "absolute") + ";z-index:" + h + (r ? ";display:none;" : "") + '"></div>'),
         s = $('<span class="popUpClose popUpCloseQview" title="Close" style="' + w + (r ? ";display:none;" : "") + '"></span>'),
         l = $('<div class="formRow clear alignRight popFotSec " style="' + (r ? ";display:none;" : "") + '"></div>'),
         e = $('<a style="margin-right:10px' + (r ? ";display:none;" : "") + '" class="button BtnG" tabindex="0">Close</a>');
@@ -74,29 +74,27 @@ jQuery.fn.PopUp = String.prototype.PopUp = function (n) {
     }), s.click(f), a && t.append(s), t.append(this), l.append(e), v && t.append(l), n && n.relative && u ? u.parent().append(t) : $("#Body").append(t), o && LightBox.Show(), i && $(window).height() < t.height() + 150 && (t.css("position", "absolute"), i = !1), t.Reposition(u, i), t
 };
 
-jQuery.fn.Reposition = function (n, t, i) {
-    var n = $(n),
-        t = $(t);
-    if (!n) return !1;
-    n.show(), t.show();
-    var u = 0,
-        f = 0,
-        r = {
-            l: $(window).scrollLeft(),
-            t: $(window).scrollTop(),
-            w: $(window).width(),
-            h: $(window).height()
-        },
-        s = n.offset();
-    if (i) f = r.w / 2 - n.outerWidth() / 2 - r.l, u = r.h / 2 - n.outerHeight() / 2;
-    else if (t.length > 0) {
-        var o = r.w / 2,
-            h = r.h / 2,
-            e = t.offset();
-        f = e.left > o ? e.left - n.outerWidth() : t.outerWidth() + e.left, u = t.outerHeight() + e.top, f + n.outerWidth() > r.w + r.l && (f = r.w - n.outerWidth() + r.l), u + n.outerHeight() > r.h + r.t && (u = r.h - n.outerHeight() + r.t), u < r.t && (u = r.t), u < 0 && (u = 0), f < r.l ? f = r.t : u < r.t && (u = r.t)
-    } else u = r.h / 2 - n.outerHeight() / 2 + r.t, f = r.w / 2 - n.outerWidth() / 2 + r.l;
-    (!$.isNumeric(u) || u < 0) && (u = 0), !$.isNumeric(f) || f < r.l ? f = r.l : u < r.t && (u = r.t + 10), u < 150 && (u = 150), n.css({
-        top: u,
-        left: f
+jQuery.fn.Reposition = function () {
+    element = $(this);
+    element.show();
+    var top = 0;
+    var left = 0;        
+    var d = {
+        l: $(window).scrollLeft(),
+        t: $(window).scrollTop(),
+        w: $(window).width(),
+        h: $(window).height()
+    };
+
+    console.log(d);
+    var left = d.w / 2 + d.l - element.width() / 2;
+    if (left < 0)
+        left = 0;
+    var top = d.h / 2 + d.t - element.height() / 2;
+    if (top < 50)
+        top = 50;
+    element.css({
+        top: top,
+        left: left
     })
 }

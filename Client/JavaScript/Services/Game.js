@@ -2,7 +2,7 @@
     return new function () {
 
         this.Join = function () {
-            return $node.once("/GameService/Join")
+            return $node.once("/GameService/Join");
         }
 
         this.PlayAgain = function()

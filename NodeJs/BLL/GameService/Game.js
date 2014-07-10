@@ -6,7 +6,7 @@
     var _pauseEnd = 0;
 
     var _dificulty = 2;
-    var _maxQuestions = 10;
+    var _maxQuestions = 1;
     var _currentQuestion = 0;
     var _players = 0;
     var _question = null;
@@ -256,47 +256,50 @@
             },
             Answer : function (answer) {
                 if (!_disabled && _sessions[session.Id]) {
-                    // try
-                    //  {
-                    var correct = (answer == _question.A);
-                    if (correct) {
-                        var points = _question.Complexity;
-                        if(!_points[session.Id])
-                            _points[session.Id] = points;
-                        else
-                            _points[session.Id] += points;
+                    try
+                    {
+                        var correct = (answer == _question.A);
+                        if (correct) {
+                            var points = _question.Complexity;
+                            if(!_points[session.Id])
+                                _points[session.Id] = points;
+                            else
+                                _points[session.Id] += points;
 
-                        _pauseEnd = new Date().getTime() + _pauseTime;
-                        _timeout = setTimeout(function () {
-                            _pauseEnd = 0;
-                            if (!_gameEnded)
-                                StartRound();
-                        }, _pauseTime);
+                            _pauseEnd = new Date().getTime() + _pauseTime;
+                            _timeout = setTimeout(function () {
+                                _pauseEnd = 0;
+                                if (!_gameEnded)
+                                    StartRound();
+                            }, _pauseTime);
                     
-                    }
+                        }
 
-                    var message = {
-                        Game: self.ToJSon(),
-                        Response: {
-                            Point: _question.Complexity,
-                            UserName: profile.UserName,
-                            Correct: correct,
-                            Answer: answer
+                        var message = {
+                            Game: self.ToJSon(),
+                            Response: {
+                                Point: _question.Complexity,
+                                UserName: profile.UserName,
+                                Correct: correct,
+                                Answer: answer
+                            }
+                        }
+
+                        self.SendToAllPlayers("Answer", message);
+
+                        if (correct) {
+                            if (_currentQuestion == _maxQuestions)
+                                EndGame();
+                            else if (correct)
+                                EndRound();
                         }
                     }
-
-                    self.SendToAllPlayers("Answer", message);
-                    if (correct) {
-                        if (_currentQuestion == _maxQuestions)
-                            EndGame();
-                        else if (correct)
-                            EndRound();
+                    catch (ex)
+                    {
+                        self.SendToAllPlayers("Error", { Title: "Answer Error", Error: ex.toString() })
+                        NewGame();
+                        console.log(ex);
                     }
-                    // }
-                    //  catch (ex)
-                    //  {
-                    //      console.log(ex);
-                    //  }
                 
                 }
             }

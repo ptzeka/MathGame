@@ -2,7 +2,7 @@
 MainApp.directive('viewport', function ($rootScope,$node) {
     return {
         restrict: 'E',
-        templateUrl: "/Templates/ViewPort.html",
+        templateUrl: "Templates/ViewPort.html",
         link: function (scope, element, attrs) {
             element.hide();
             scope.$watch("Question", function (newValue, oldValue) {

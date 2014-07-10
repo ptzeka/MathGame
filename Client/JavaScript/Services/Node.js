@@ -1,6 +1,7 @@
 ﻿MainApp.service("$node", ["$cookies", function ($cookies) {
 
-    var socket = io("http://localhost:90");
+    //var socket = io("http://mathgame.jit.su/");
+    var socket = io("http://localhost:91");
     var _sid = null;
 
     var request = socket.once("connection", function (data) {

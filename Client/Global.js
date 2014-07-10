@@ -5,10 +5,10 @@ var Global = (function () {
     var scripts = {
         Entities: [],
         Models: [],
-        FrameWork: ["angular.min", "Socket.io"],
+        FrameWork: ["angular.min", "socket.io"],
         Filters: [],
         Utilities: [],
-        Apps: ["Main"],
+        Apps: ["main"],
         Services: ["Cookies","Dialog", "Node","Profile","Game"],
         Directives: ["Form","ViewPort","PauseBar","FadeOnChange"],
         Controllers: ["MainController","FormController"]
@@ -18,7 +18,7 @@ var Global = (function () {
     for (var k in scripts) {
         var script = scripts[k];
         for (var i = 0; i < script.length; i++) {
-            new ScriptPromise("/JavaScript/" + k + "/" + script[i].trimStart("/"), false).resolve();
+            new ScriptPromise("JavaScript/" + k + "/" + script[i].trimStart("/"), false).resolve();
             //promises.push(new ScriptPromise("/JavaScript/" + k + "/" + script[i].trimStart("/"), false));
         }
     }

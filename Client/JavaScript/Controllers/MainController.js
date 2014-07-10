@@ -15,7 +15,7 @@ function MainController($rootScope, $scope, dialog, profileService, gameService)
     $scope.ChatList = [];
     $scope.ShowLightBox = false;
     $scope.Winners = {};
-    var _score = null;
+    var _globalDialog = null;
 
     function UpdateState(gameState) {
         $scope.PlayerList = gameState.PlayerList;
@@ -36,29 +36,26 @@ function MainController($rootScope, $scope, dialog, profileService, gameService)
 
     gameService.On("RemovePlayer", function (data) {
         console.log("PlayerRemoved");
-        pdateState(data.Game);
+        UpdateState(data.Game);
         $scope.$digest();
     })
 
     gameService.On("GameStart", function (data) {
         console.log("GameStart");
-        console.log(data);
         $scope.ShowLightBox = false;
-        if (_score)
-            _score.Close();
+        if (_globalDialog)
+            _globalDialog.Close();
         $scope.$digest();
     });
 
     gameService.On("EndRound", function (data) {
         console.log("EndRound");
-        console.log(data);
         UpdateState(data.Game);
         $scope.$digest();
     });
 
     gameService.On("StartRound", function (data) {
         console.log("StartRound");
-        console.log(data);
         UpdateState(data.Game);
         $scope.Responses = [];
         $scope.$digest();
@@ -88,8 +85,6 @@ function MainController($rootScope, $scope, dialog, profileService, gameService)
 
     gameService.On("EndGame", function (data) {
         console.log("EndGame");
-        console.log(data);
-        UpdateState(data.Game);
         $scope.ShowLightBox = true;
         var scope = {
             PlayAgain: function () {
@@ -97,8 +92,9 @@ function MainController($rootScope, $scope, dialog, profileService, gameService)
             },
             Winners: data.Game.Winners || []
         }
-
-        _score = dialog.$open("/Templates/GameEnd.html", scope, {}, { showCloseButton: false });
+        if (_globalDialog)
+            _globalDialog.Close();
+        _globalDialog = dialog.$open("Templates/GameEnd.html", scope, {}, { showCloseButton: false });
         console.log(data);
         $scope.$digest();
     });
@@ -106,12 +102,14 @@ function MainController($rootScope, $scope, dialog, profileService, gameService)
     gameService.On("Authenticate", function (data) {
         console.log("Authenticate");
         $scope.ShowLightBox = true;
-
-        var d = dialog.$open("/Templates/Createuser.html", {}, {}, { showCloseButton: false })
+        if (_globalDialog)
+            _globalDialog.Close();
+        _globalDialog = dialog.$open("Templates/CreateUser.html", {}, {}, { showCloseButton: false })
 
         gameService.Once("Authenticated").then(function (data) {
             console.log("Registered");
-            d.Close();
+            if (_globalDialog)
+                _globalDialog.Close();
             $scope.ShowLightBox = false;
             $scope.$digest();
         });
@@ -123,6 +121,14 @@ function MainController($rootScope, $scope, dialog, profileService, gameService)
         gameService.Join().then(function (args) {
             //console.log(args);
         })
+    });
+
+    gameService.On("Error", function (data) {
+        if (_globalDialog)
+            _globalDialog.Close();
+        $scope.ShowLightBox = true;
+        _globalDialog = dialog.$open("Templates/Error.html", data, {}, { showCloseButton: false })
+        $scope.$digest();
     });
 
     gameService.Join();

@@ -3,6 +3,9 @@ module.exports = new function () {
 
     this.Current = function (profile) {
         return {
+            RemoveUser: function(guid){
+                return userMgr.RemoveUser(guid);
+            },
             CreateUser: function (data) {
                 var self = this;
                 return userMgr.Exists(data.UserName).then(function (args) {

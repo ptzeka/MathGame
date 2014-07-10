@@ -8,19 +8,22 @@
                 <div>
                     <span class="pointer"><span ng-class="(!Paused && !Disabled) ? 'icoPointer pointerFadeIn' : 'pointerFadeOut icoPointer'"></span></span>
                     <label class="formLabel" fadeOnChange="Question" style="opacity:0;">{{Question}}</label>
-                    <span class="pauseBar" pausebar></span>
-                </div>
-                <div class="responses" ng-repeat="response in Responses">
-                    <div><label><span class="H">{{response.UserName}}</span>: <span ng-class="response.Correct ? 'EM' : ''">{{response.Answer}}</span></label><span ng-class="response.Correct ? 'icoCorrect icoCorrectShow' : 'icoCorrect icoCorrectHide'"></span></div>
-                </div>
+                    <div pausebar></div>
+                </div>                
             </div>
         </div>
         <div class="yourAnswer Window">
             <div class="PaneInner">
-                <form name="MyForm" ng-controller="FormController" ng-init="Url='/SubmitAnswer'" ng-submit="Submit();">
-                    <input ng-class="(Disabled || Paused) ? 'text disabled' : 'text'" name="Answer" type="text" ng-model="Model.Answer" required />
-                    <span id="AnswerText" class="errorLabel" ng-show="MyForm.UserName.$error.required && MyForm.UserName.$pristine">Please type an answer!</span>
-                    <input type="submit" value="Submit" ng-class="(Disabled || Paused) ? 'button disabled' : 'button'" id="SubmitAnswer" />
+                <div class="formRow">
+                    <span class="S">Type your answer to the math question above and submit below! </span>
+                </div>
+                <div class="responses" ng-repeat="response in Responses">
+                    <div><label><span class="H">{{response.UserName}}</span>: <span ng-class="response.Correct ? 'EM' : ''">{{response.Answer}}</span></label><span ng-class="response.Correct ? 'icoCorrect icoCorrectShow' : 'icoCorrect icoCorrectHide'"></span></div>
+                </div>
+                <form name="MyForm" ng-controller="FormController" ng-init="Url='/SubmitAnswer'" ng-submit="Submit();" class="formRow">
+                    <input ng-class="(Disabled || Paused) ? 'text disabled' : 'text'" name="Answer" type="text" ng-model="Model.Answer" required numeric />
+                    <input type="submit" value="Submit Answer" ng-class="(Disabled || Paused) ? 'button disabled' : 'button'" id="SubmitAnswer" />
+                    <span class="formLabel S" ng-show="MyForm.Answer.$error.numeric">(numeric only)</span>
                 </form>
             </div>
         </div>
@@ -38,15 +41,15 @@
         </div>
         <div class="chat Pane">
             <div class="PaneInner">
-                <div class="formRow">
-                    <div class="chat" ng-repeat="chat in ChatList">
+                <div class="formRow" id="chatInner">
+                    <div class="chatItem" ng-repeat="chat in ChatList">
                         <div><label><span class="H">{{chat.UserName}}</span>: {{chat.Text}}</label></div>
                     </div>
                 </div>
                 <div class="formRow">
-                    <form name="MyForm" ng-controller="FormController" ng-init="Url='/SubmitChat'" ng-submit="Submit();">
+                    <form chatForm name="MyForm" ng-controller="FormController" ng-init="Url='/SubmitChat'" ng-submit="Submit();">
                         <input ng-model="Model.Chat" name="Chat" class="text chatText" />
-                        <input class="button" type="submit" value="Submit" id="SubmitAnswer" />
+                        <input class="button" type="submit" value="Send" id="SubmitChat" />
                     </form>
                 </div>
             </div>

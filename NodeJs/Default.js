@@ -1,6 +1,7 @@
 ﻿require("./require.js");
 var Controller = require("./FrameWork/Controller/ControllerBase.js");
-var io = require('socket.io').listen(90);
+var io = require('socket.io').listen(80);
+//var io = require('socket.io').listen(91);
 
 /*
 io.set("origins","localhost:*");
@@ -19,7 +20,7 @@ io.use(function (socket, next) {
 
     socket.CookieService = require("./BLL/CookieService/CookieService.js").Current(socket);
     //socket.SID = socket.CookieService.Get("SID") || require("./Bll/Guid/Guid.js").Generate("SID"); //cookie based, right now every page load = 1 session
-    socket.SID = require("./Bll/Guid/Guid.js").Generate("SID");
+    socket.SID = require("./BLL/Guid/Guid.js").Generate("SID");
     socket.SessionService = require("./BLL/SessionService/SessionService.js").Current(socket,socket.SID);
     socket.ProfileService = require("./BLL/ProfileService/ProfileService.js").Current(socket.SessionService.Session());
     socket.UserService = require("./BLL/ProfileService/UserService.js").Current(socket.ProfileService.Profile());
@@ -73,12 +74,14 @@ io.sockets.on('connection', function (socket) {
     new Controller(socket, "/SubmitAnswer", function (args) {
 
         socket.GameService.SubmitAnswer(args.Answer);
+        socket.emit("/SubmitAnswer", {Answer: ''})
 
     }).Requires("Authentication");
 
     new Controller(socket, "/SubmitChat", function (args) {
 
         socket.GameService.Chat(args.Chat);
+        socket.emit("/SubmitChat", { Chat: '' })
 
     }).Requires("Authentication");
 
@@ -91,6 +94,7 @@ io.sockets.on('connection', function (socket) {
             session.IsConnected = false;
             session.Destroy();
             session.SetSocketContext(null);
+            socket.UserService.RemoveUser(socket.ProfileService.Profile().UserGuid)
         }
         //$$SessionService.Remove(session.Id);
     });
